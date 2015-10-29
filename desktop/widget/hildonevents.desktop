@@ -1,0 +1,8 @@
+[Desktop Entry]
+Name=Event Feed
+Comment=Homescreen widget for Hildon Event Feed
+Type=qt
+X-Path=/opt/hildonevents/bin/showwidget
+X-Multiple-Instances=false
+X-home-applet-minwidth=300
+X-home-applet-minheight=332

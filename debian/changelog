@@ -1,0 +1,34 @@
+hildonevents (0.1.0) unstable; urgency=low
+  * D-Bus service is now org.hildon.eventfeed.
+  * Re-write API to mimic Meego-Harmattan event feed.
+  * Use Qt Components Hildon for UI.
+
+ -- Stuart Howarth <showarth@marxoft.co.uk>  Thu, 29 Oct 2015 21:55:46 +0100
+
+hildonevents (0.0.5) unstable; urgency=low
+  * Fixed updating of UI/widget after some DBus calls.
+
+ -- Stuart Howarth <stuhowarth77@gmail.com>  Sat, 06 Oct 2012 18:07:19 +0100
+
+hildonevents (0.0.4) unstable; urgency=low
+  * Fixed error in getRefreshAction DBus method, which previously returned an empty string in all cases.
+  * Tweaks to backend and delegate behaviour.
+  * Added example scripts for RSS Feed and YouTube. Scripts are located at /home/user/Event Feed/examples/.
+
+ -- Stuart Howarth <stuhowarth77@gmail.com>  Wed, 03 Oct 2012 22:41:17 +0100
+
+hildonevents (0.0.3) unstable; urgency=low
+  * Tweaks to backend and delegate behaviour.
+
+ -- Stuart Howarth <stuhowarth77@gmail.com>  Mon, 01 Oct 2012 14:09:47 +0100
+
+hildonevents (0.0.2) unstable; urgency=low
+  * Fixed small display issue with the widget.
+
+ -- Stuart Howarth <stuhowarth77@gmail.com>  Sun, 30 Sep 2012 20:00:58 +0100
+
+hildonevents (0.0.1) unstable; urgency=low
+
+  * Initial Release.
+
+ -- Stuart Howarth <stuhowarth77@gmail.com>  Wed, 26 Sep 2012 22:47:28 +0100

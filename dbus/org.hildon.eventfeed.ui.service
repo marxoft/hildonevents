@@ -1,0 +1,4 @@
+[D-BUS Service]
+Interface=org.hildon.eventfeed.ui
+Name=org.hildon.eventfeed.ui
+Exec=/opt/hildonevents/bin/hildonevents

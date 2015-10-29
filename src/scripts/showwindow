@@ -1,0 +1,8 @@
+#!/bin/sh
+
+if [ $(pidof hildonevents) ]
+    then
+        run-standalone.sh dbus-send --print-reply --dest=org.hildon.eventfeed.ui /org/hildon/eventfeed/ui org.hildon.eventfeed.ui.showWindow
+    else
+        run-standalone.sh /opt/hildonevents/bin/hildonevents "--window"
+fi
