@@ -6,7 +6,9 @@ can interact with the event feed using D-Bus.
 ##D-Bus interface
 
 Service name: org.hildon.eventfeed
+
 Path: /org/hildon/eventfeed
+
 Interface name: org.hildon.eventfeed
 
 ##D-Bus methods
@@ -14,6 +16,7 @@ Interface name: org.hildon.eventfeed
 ###addItem
 
 Signature: a{s,v}
+
 Returns: i
 
 Adds an item to the event feed using the supplied parameters, and returns a unique identifer for the item, or -1 if 
