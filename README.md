@@ -35,7 +35,7 @@ The following parameters can be supplied:
         <td>icon</td>
         <td>string</td>
         <td>No</td>
-        <td>The path to the item's icon.</td>
+        <td>The absolute path or name of the item's icon.</td>
     </tr>
     <tr>
         <td>title</td>
@@ -117,6 +117,12 @@ Removes the item with the specified unique identifier.
 Signature: s
 
 Removes all items with the specified source name.
+
+###removeRefreshAction
+
+Signature: s
+
+Removes the specified refresh action.
 
 ###updateItem
 
