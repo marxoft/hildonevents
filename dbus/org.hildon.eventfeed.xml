@@ -17,6 +17,9 @@
     <method name="removeItemsBySourceName">
       <arg name="sourceName" type="s" direction="in"/>
     </method>
+    <method name="removeRefreshAction">
+      <arg name="action" type="s" direction="in"/>
+    </method>
     <method name="updateItem">
       <arg name="id" type="i" direction="in"/>
       <arg name="parameters" type="a{sv}" direction="in"/>

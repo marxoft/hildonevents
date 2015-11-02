@@ -120,6 +120,16 @@ void EventFeed::removeItemsBySourceName(const QString &sourceName) {
     }
 }
 
+void EventFeed::removeRefreshAction(const QString &action) {
+#ifdef DEBUG
+    qDebug() << "EventFeed::removeRefreshAction" << action;
+#endif
+    QSqlQuery query(getDatabase());
+    query.prepare("DELETE FROM refreshActions WHERE action = ?");
+    query.addBindValue(action);
+    query.exec();
+}
+
 void EventFeed::updateItem(qlonglong id, const QVariantMap &parameters) {
 #ifdef DEBUG
     qDebug() << "EventFeed::updateItem" << id << parameters;

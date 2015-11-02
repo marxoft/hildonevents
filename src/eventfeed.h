@@ -36,6 +36,7 @@ public Q_SLOTS:
     Q_SCRIPTABLE void addRefreshAction(const QString &action);
     Q_SCRIPTABLE void removeItem(qlonglong id);
     Q_SCRIPTABLE void removeItemsBySourceName(const QString &sourceName);
+    Q_SCRIPTABLE void removeRefreshAction(const QString &action);
     Q_SCRIPTABLE void updateItem(qlonglong id, const QVariantMap &parameters);
     
     void openItem(qlonglong id);
