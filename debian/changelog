@@ -1,3 +1,9 @@
+hildonevents (0.2.0) unstable; urgency=low
+  * Add removeRefreshAction method.
+  * Enable icons to be specified by name.
+
+ -- Stuart Howarth <showarth@marxoft.co.uk>  Mon, 02 Nov 2015 16:19:54 +0100
+
 hildonevents (0.1.0) unstable; urgency=low
   * D-Bus service is now org.hildon.eventfeed.
   * Re-write API to mimic Meego-Harmattan event feed.
