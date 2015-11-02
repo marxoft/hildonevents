@@ -76,7 +76,7 @@ HomescreenWidget {
                 height: 28
                 fillMode: Image.PreserveAspectFit
                 smooth: true
-                source: icon ? icon : "image://icon/hildonevents"
+                source: icon ? (icon.indexOf("/") == -1 ? "image://icon/" : "") + icon : "image://icon/hildonevents"
             }
             
             Label {
