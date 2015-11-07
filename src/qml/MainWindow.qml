@@ -28,6 +28,17 @@ Window {
             text: qsTr("Refresh")
             onTriggered: feed.refresh()
         }
+        
+        MenuItem {
+            text: qsTr("Settings")
+            onTriggered: settingsDialog.createObject(window)
+        }
+    }
+    
+    FontMetrics {
+        id: bodyFontMetrics
+        
+        font.pointSize: platformStyle.fontSizeSmall
     }
     
     ListView {
@@ -65,7 +76,7 @@ Window {
                     top: parent.top
                     margins: platformStyle.paddingMedium
                 }
-                spacing: platformStyle.paddingMedium                
+                spacing: platformStyle.paddingMedium
             
                 Label {
                     id: titleLabel
@@ -78,10 +89,13 @@ Window {
             
                 Label {
                     id: bodyLabel
-                
+                    
                     width: parent.width
+                    height: Math.min(paintedHeight, bodyFontMetrics.height * 4)
+                    clip: true
                     wrapMode: Text.Wrap
                     font.pointSize: platformStyle.fontSizeSmall
+                    textFormat: Text.PlainText
                     text: body
                 }
                 
@@ -134,6 +148,14 @@ Window {
         }
     }
     
+    Label {
+        anchors.centerIn: parent
+        font.pointSize: platformStyle.fontSizeXLarge
+        color: platformStyle.disabledTextColor
+        text: qsTr("No events")
+        visible: eventModel.count == 0
+    }
+    
     Menu {
         id: contextMenu
         
@@ -145,6 +167,16 @@ Window {
         MenuItem {
             text: qsTr("Remove") + " " + eventModel.data(view.currentIndex, "sourceDisplayName")
             onTriggered: feed.removeItemsBySourceName(eventModel.data(view.currentIndex, "sourceName"))
+        }
+    }
+    
+    Component {
+        id: settingsDialog
+        
+        SettingsDialog {
+            onStatusChanged: if (status == DialogStatus.Closed) destroy();
+            
+            Component.onCompleted: open()
         }
     }
     
