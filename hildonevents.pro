@@ -8,17 +8,20 @@ HEADERS = \
     src/eventfeed.h \
     src/eventfeedui.h \
     src/eventmodel.h \
-    src/json.h
+    src/json.h \
+    src/settingsmodel.h
 
 SOURCES = \
     src/eventfeed.cpp \
     src/eventfeedui.cpp \
     src/eventmodel.cpp \
     src/json.cpp \
-    src/main.cpp
+    src/main.cpp \
+    src/settingsmodel.cpp
 
 qml.files = \
     src/qml/MainWindow.qml \
+    src/qml/SettingsDialog.qml \
     src/qml/Widget.qml
 
 qml.path = /opt/hildonevents/qml
