@@ -178,6 +178,8 @@ HomescreenWidget {
         
         SettingsDialog {
             onStatusChanged: if (status == DialogStatus.Closed) destroy();
+            
+            Component.onCompleted: open()
         }
     }
     
