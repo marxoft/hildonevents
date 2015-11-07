@@ -1,3 +1,9 @@
+hildonevents (0.3.0) unstable; urgency=low
+  * Add settings API for feeds.
+  * Limit delegate height in the UI.
+
+ -- Stuart Howarth <showarth@marxoft.co.uk>  Sat, 07 Nov 2015 00:14:25 +0100
+
 hildonevents (0.2.0) unstable; urgency=low
   * Add removeRefreshAction method.
   * Enable icons to be specified by name.
