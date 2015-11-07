@@ -25,6 +25,7 @@ HomescreenWidget {
     width: 300
     height: 332
     pluginId: "hildonevents.desktop-0"
+    settingsAvailable: true
     
     Rectangle {
         id: background
@@ -110,6 +111,12 @@ HomescreenWidget {
             
             onClicked: feed.openItem(id)
         }
+        
+        Label {
+            anchors.centerIn: parent
+            text: qsTr("No events")
+            visible: eventModel.count == 0
+        }
     }
     
     ToolButtonStyle {
@@ -165,6 +172,16 @@ HomescreenWidget {
             onClicked: view.currentIndex = Math.min(view.count - 1, view.currentIndex + 4)            
         }
     }
+    
+    Component {
+        id: settingsDialog
+        
+        SettingsDialog {
+            onStatusChanged: if (status == DialogStatus.Closed) destroy();
+        }
+    }
+    
+    onSettingsRequested: settingsDialog.createObject(widget)
     
     Component.onCompleted: eventModel.reload()
 }
