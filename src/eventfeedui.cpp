@@ -17,6 +17,7 @@
 #include "eventfeedui.h"
 #include "eventfeed.h"
 #include "eventmodel.h"
+#include "settingsmodel.h"
 #include <QDBusConnection>
 #include <QDeclarativeEngine>
 #include <QDeclarativeContext>
@@ -71,6 +72,7 @@ void EventFeedUi::initEngine() {
     }
     
     qmlRegisterType<EventModel>("org.hildon.eventfeed", 1, 0, "EventModel");
+    qmlRegisterType<SettingsModel>("org.hildon.eventfeed", 1, 0, "SettingsModel");
     
     m_engine = new QDeclarativeEngine(this);
     m_engine->rootContext()->setContextProperty("feed", EventFeed::instance());
