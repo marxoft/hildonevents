@@ -140,7 +140,7 @@ Emitted when the 'refresh' button is pressed in the user interface.
 ##Settings API
 
 Hildon Event Feed can display settings for individual feeds via the settings API. To provide settings for a feed, place 
-a *.desktop file in **/opt/hildonevents/settings/**. The *.desktop should provide the following values:
+a .desktop file in **/opt/hildonevents/settings/**. The .desktop should provide the following values:
 
 <table>
     <tr>
