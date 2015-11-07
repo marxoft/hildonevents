@@ -136,3 +136,99 @@ list of acceptable parameters.
 ###refreshRequested
 
 Emitted when the 'refresh' button is pressed in the user interface.
+
+##Settings API
+
+Hildon Event Feed can display settings for individual feeds via the settings API. To provide settings for a feed, place 
+a *.desktop file in **/opt/hildonevents/settings/**. The *.desktop should provide the following values:
+
+<table>
+    <tr>
+        <th>Name</th>
+        <th>Description</th>
+    </tr>
+    <tr>
+        <td>Name</td>
+        <td>The feed's display name.</td>
+    </tr>
+    <tr>
+        <td>Icon</td>
+        <td>The absolute path or name of the feed's icon.</td>
+    </tr>
+    <tr>
+        <td>Type</td>
+        <td>The settings type. Can be 'QML' or 'Application'.</td>
+    </tr>
+    <tr>
+        <td>Exec</td>
+        <td>The path to the QML file or executable.</td>
+    </tr>
+</table>
+
+###Example
+
+An example settings desktop file for 'My Feed':
+
+    [Desktop Entry]
+    Name=My Feed
+    Icon=myfeed
+    Type=QML
+    Exec=/opt/myfeed/qml/SettingsDialog.qml
+
+An example settings dialog for 'My Feed':
+
+    import QtQuick 1.0
+    import org.hildon.components 1.0
+    import org.hildon.settings 1.0
+    
+    Dialog {
+        id: dialog
+        
+        title: "My Feed Settings"
+        height: column.height + platformStyle.paddingMedium
+        
+        GConfItem {
+            id: gconf
+            
+            key: "/apps/myfeed/feed_url"
+        }
+        
+        Column {
+            id: column
+            
+            anchors {
+                left: parent.left
+                right: button.left
+                rightMargin: platformStyle.paddingMedium
+                bottom: parent.bottom
+            }
+            spacing: platformStyle.paddingMedium
+            
+            Label {
+                width: parent.width
+                text: "Feed URL"
+            }
+            
+            TextField {
+                id: textField
+                
+                width: parent.width
+                text: gconf.value
+            }
+        }
+        
+        Button {
+            id: button
+            
+            anchors {
+                right: parent.right
+                bottom: parent.bottom
+            }
+            style: DialogButtonStyle {}
+            text: "Done"
+            enabled: textField.text != ""
+            onClicked: dialog.accept()
+        }
+        
+        onAccepted: gconf.value = textField.text
+    }
