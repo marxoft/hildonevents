@@ -57,6 +57,8 @@ EventModel::EventModel(QObject *parent) :
 #endif
     setSortRole(TimestampRole);
     
+    connect(this, SIGNAL(rowsInserted(QModelIndex, int, int)), this, SIGNAL(countChanged()));
+    connect(this, SIGNAL(rowsRemoved(QModelIndex, int, int)), this, SIGNAL(countChanged()));
     connect(EventFeed::instance(), SIGNAL(itemAdded(qlonglong)), this, SLOT(onItemAdded(qlonglong)));
     connect(EventFeed::instance(), SIGNAL(itemRemoved(qlonglong)), this, SLOT(onItemRemoved(qlonglong)));
     connect(EventFeed::instance(), SIGNAL(itemsRemoved(QString)), this, SLOT(onItemsRemoved(QString)));

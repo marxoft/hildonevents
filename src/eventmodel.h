@@ -22,6 +22,8 @@
 class EventModel : public QStandardItemModel
 {
     Q_OBJECT
+    
+    Q_PROPERTY(int count READ rowCount NOTIFY countChanged)
         
 public:
     enum Roles {
@@ -56,6 +58,9 @@ private Q_SLOTS:
     void onItemRemoved(qlonglong id);
     void onItemsRemoved(const QString &sourceName);
     void onItemUpdated(qlonglong id);
+
+Q_SIGNALS:
+    void countChanged();
 
 private:
     QHash<int, QByteArray> m_roles;
