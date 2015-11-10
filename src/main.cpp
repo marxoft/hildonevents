@@ -24,7 +24,7 @@ Q_DECL_EXPORT int main(int argc, char *argv[]) {
     QApplication app(argc, argv);
     app.setOrganizationName("HildonEvents");
     app.setApplicationName("Event Feed");
-    app.setApplicationVersion("0.3.0");
+    app.setApplicationVersion("0.3.1");
     app.setQuitOnLastWindowClosed(false);
     
     initDatabase();
