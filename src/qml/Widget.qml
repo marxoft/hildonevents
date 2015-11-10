@@ -183,7 +183,7 @@ HomescreenWidget {
         }
     }
     
-    onSettingsRequested: settingsDialog.createObject(widget)
+    onSettingsRequested: settingsDialog.createObject(null)
     
     Component.onCompleted: eventModel.reload()
 }
