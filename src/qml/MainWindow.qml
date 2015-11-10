@@ -135,7 +135,11 @@ Window {
                                 
                                 Image {
                                     anchors.centerIn: parent
-                                    source: video ? "/etc/hildon/theme/mediaplayer/Play.png" : ""
+                                    width: 48
+                                    height: 48
+                                    smooth: true
+                                    source: (video) && (parent.status == Image.Ready)
+                                            ? "/etc/hildon/theme/mediaplayer/Play.png" : ""
                                 }
                             }
                         }
