@@ -23,6 +23,8 @@
 #include <QDeclarativeContext>
 #include <QDeclarativeComponent>
 #include <qdeclarative.h>
+#include <QSsl>
+#include <QSslConfiguration>
 #include <QDebug>
 
 static const QString WIDGET_FILENAME("/opt/hildonevents/qml/Widget.qml");
@@ -77,6 +79,10 @@ void EventFeedUi::initEngine() {
     m_engine = new QDeclarativeEngine(this);
     m_engine->rootContext()->setContextProperty("feed", EventFeed::instance());
     m_engine->rootContext()->setContextProperty("ui", this);
+    
+    QSslConfiguration config = QSslConfiguration::defaultConfiguration();
+    config.setProtocol(QSsl::TlsV1);
+    QSslConfiguration::setDefaultConfiguration(config);
 }
 
 QObject* EventFeedUi::createQmlObject(const QString &fileName) {

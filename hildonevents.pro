@@ -1,5 +1,5 @@
 TARGET = hildonevents
-QT += dbus declarative sql
+QT += dbus declarative network sql
 
 #DEFINES += DEBUG
 
