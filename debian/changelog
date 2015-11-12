@@ -1,3 +1,9 @@
+hildonevents (0.4.0) unstable; urgency=low
+  * Provide indication that the event feed is refreshing.
+  * Allow event feed refreshing to be cancelled.
+
+ -- Stuart Howarth <showarth@marxoft.co.uk>  Thu, 12 Nov 2015 21:44:53 +0100
+
 hildonevents (0.3.1) unstable; urgency=low
   * Set SSL configuration to use TlsV1.
 
