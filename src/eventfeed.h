@@ -18,11 +18,16 @@
 #define EVENTFEED_H
 
 #include <QObject>
+#include <QStringList>
 #include <QVariantMap>
+
+class QProcess;
 
 class EventFeed : public QObject
 {
     Q_OBJECT
+    
+    Q_PROPERTY(bool refreshing READ isRefreshing NOTIFY refreshingChanged)
     
     Q_CLASSINFO("D-Bus Interface", "org.hildon.eventfeed")
 
@@ -30,6 +35,8 @@ public:
     ~EventFeed();
     
     static EventFeed* instance();
+    
+    bool isRefreshing() const;
         
 public Q_SLOTS:
     Q_SCRIPTABLE qlonglong addItem(const QVariantMap &parameters);
@@ -42,6 +49,7 @@ public Q_SLOTS:
     void openItem(qlonglong id);
     
     void refresh();
+    void cancelRefresh();
     
 Q_SIGNALS:
     Q_SCRIPTABLE void refreshRequested();
@@ -50,11 +58,22 @@ Q_SIGNALS:
     void itemRemoved(qlonglong id);
     void itemsRemoved(const QString &sourceName);
     void itemUpdated(qlonglong id);
+    
+    void refreshingChanged();
+
+private Q_SLOTS:
+    void nextRefreshAction();
+    
+    void onRefreshFinished();
 
 private:
     EventFeed();
     
     static EventFeed *self;
+    
+    QProcess *m_refreshProcess;
+    
+    QStringList m_refreshActions;
 };
 
 #endif // EVENTFEED_H

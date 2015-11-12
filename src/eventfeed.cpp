@@ -21,7 +21,6 @@
 #include <QDBusConnection>
 #include <QDesktopServices>
 #include <QProcess>
-#include <QStringList>
 #include <QUrl>
 #ifdef DEBUG
 #include <QDebug>
@@ -30,7 +29,8 @@
 EventFeed* EventFeed::self = 0;
 
 EventFeed::EventFeed() :
-    QObject()
+    QObject(),
+    m_refreshProcess(0)
 {
     self = this;
     
@@ -45,6 +45,10 @@ EventFeed::~EventFeed() {
 
 EventFeed* EventFeed::instance() {
     return self ? self : self = new EventFeed;
+}
+
+bool EventFeed::isRefreshing() const {
+    return !m_refreshActions.isEmpty();
 }
 
 qlonglong EventFeed::addItem(const QVariantMap &parameters) {
@@ -179,13 +183,66 @@ void EventFeed::openItem(qlonglong id) {
 }
 
 void EventFeed::refresh() {
+    if (isRefreshing()) {
+        return;
+    }
+    
     QSqlQuery query(getDatabase());
     
     if (query.exec("SELECT action FROM refreshActions")) {
         while (query.next()) {
-            QProcess::startDetached(query.value(0).toString());
+            m_refreshActions << query.value(0).toString();
         }
     }
     
+    if (!m_refreshActions.isEmpty()) {
+        nextRefreshAction();
+        emit refreshingChanged();
+    }
+    
     emit refreshRequested();
+}
+
+void EventFeed::cancelRefresh() {
+    if (!isRefreshing()) {
+        return;
+    }
+    
+    m_refreshActions.clear();
+    
+    if ((!m_refreshProcess) || (m_refreshProcess->state() == QProcess::NotRunning)) {
+        emit refreshingChanged();
+    }
+    else {
+        m_refreshProcess->kill();
+    }
+}
+
+void EventFeed::nextRefreshAction() {
+    if (m_refreshActions.isEmpty()) {
+        return;
+    }
+    
+    if (!m_refreshProcess) {
+        m_refreshProcess = new QProcess(this);
+        connect(m_refreshProcess, SIGNAL(error(QProcess::ProcessError)), this, SLOT(onRefreshFinished()));
+        connect(m_refreshProcess, SIGNAL(finished(int, QProcess::ExitStatus)), this, SLOT(onRefreshFinished()));
+    }
+    
+    if (m_refreshProcess->state() == QProcess::NotRunning) {
+        m_refreshProcess->start(m_refreshActions.first());
+    }
+}
+
+void EventFeed::onRefreshFinished() {
+    if (!m_refreshActions.isEmpty()) {
+        m_refreshActions.removeFirst();
+    }
+    
+    if (!m_refreshActions.isEmpty()) {
+        nextRefreshAction();
+    }
+    else {
+        emit refreshingChanged();
+    }
 }

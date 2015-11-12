@@ -158,8 +158,8 @@ HomescreenWidget {
             width: buttonRow.buttonWidth
             height: 48
             style: buttonStyle
-            iconName: "general_refresh"
-            onClicked: feed.refresh()
+            iconName: feed.refreshing ? "general_stop" : "general_refresh"
+            onClicked: feed.refreshing ? feed.cancelRefresh() : feed.refresh()
         }
         
         ToolButton {

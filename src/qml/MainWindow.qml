@@ -23,10 +23,11 @@ Window {
     
     visible: true
     title: qsTr("Event Feed")
+    showProgressIndicator: feed.refreshing
     menuBar: MenuBar {
         MenuItem {
-            text: qsTr("Refresh")
-            onTriggered: feed.refresh()
+            text: feed.refreshing ? qsTr("Cancel refresh") : qsTr("Refresh")
+            onTriggered: feed.refreshing ? feed.cancelRefresh() : feed.refresh()
         }
         
         MenuItem {
