@@ -1,3 +1,9 @@
+hildonevents (0.5.0) unstable; urgency=low
+  * Enable automatic scrolling in the homescreen widget.
+  * Change settings dialog to a window.
+
+ -- Stuart Howarth <showarth@marxoft.co.uk>  Mon, 08 Feb 2016 17:50:26 +0100
+
 hildonevents (0.4.0) unstable; urgency=low
   * Provide indication that the event feed is refreshing.
   * Allow event feed refreshing to be cancelled.
