@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2015 Stuart Howarth <showarth@marxoft.co.uk>
+ * Copyright (C) 2016 Stuart Howarth <showarth@marxoft.co.uk>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License version 3 as
@@ -18,7 +18,7 @@ import QtQuick 1.0
 import org.hildon.components 1.0
 import org.hildon.eventfeed 1.0
 
-Window {
+ApplicationWindow {
     id: window
     
     visible: true
@@ -32,7 +32,7 @@ Window {
         
         MenuItem {
             text: qsTr("Settings")
-            onTriggered: settingsDialog.createObject(window)
+            onTriggered: windowStack.push(Qt.resolvedUrl("SettingsWindow.qml"))
         }
     }
     
@@ -172,16 +172,6 @@ Window {
         MenuItem {
             text: qsTr("Remove") + " " + eventModel.data(view.currentIndex, "sourceDisplayName")
             onTriggered: feed.removeItemsBySourceName(eventModel.data(view.currentIndex, "sourceName"))
-        }
-    }
-    
-    Component {
-        id: settingsDialog
-        
-        SettingsDialog {
-            onStatusChanged: if (status == DialogStatus.Closed) destroy();
-            
-            Component.onCompleted: open()
         }
     }
     

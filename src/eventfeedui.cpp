@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2015 Stuart Howarth <showarth@marxoft.co.uk>
+ * Copyright (C) 2016 Stuart Howarth <showarth@marxoft.co.uk>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License version 3 as
@@ -17,6 +17,7 @@
 #include "eventfeedui.h"
 #include "eventfeed.h"
 #include "eventmodel.h"
+#include "settings.h"
 #include "settingsmodel.h"
 #include <QDBusConnection>
 #include <QDeclarativeEngine>
@@ -79,6 +80,7 @@ void EventFeedUi::initEngine() {
     m_engine = new QDeclarativeEngine(this);
     m_engine->rootContext()->setContextProperty("feed", EventFeed::instance());
     m_engine->rootContext()->setContextProperty("ui", this);
+    m_engine->rootContext()->setContextProperty("settings", Settings::instance());
     
     QSslConfiguration config = QSslConfiguration::defaultConfiguration();
     config.setProtocol(QSsl::TlsV1);

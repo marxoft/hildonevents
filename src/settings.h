@@ -14,40 +14,35 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef EVENTFEEDUI_H
-#define EVENTFEEDUI_H
+#ifndef SETTINGS_H
+#define SETTINGS_H
 
 #include <QObject>
-#include <QPointer>
 
-class QDeclarativeEngine;
-
-class EventFeedUi : public QObject
+class Settings : public QObject
 {
     Q_OBJECT
     
-    Q_CLASSINFO("D-Bus Interface", "org.hildon.eventfeed.ui")
-    
-public:
-    ~EventFeedUi();
-    
-    static EventFeedUi* instance();
-    
-public Q_SLOTS:
-    Q_SCRIPTABLE void showWidget();
-    Q_SCRIPTABLE void showWindow();
-    
-private:
-    EventFeedUi();
-    
-    void initEngine();
-    QObject* createQmlObject(const QString &fileName);
-    
-    static EventFeedUi *self;
+    Q_PROPERTY(bool enableAutomaticScrollingInWidget READ enableAutomaticScrollingInWidget
+               WRITE setEnableAutomaticScrollingInWidget NOTIFY enableAutomaticScrollingInWidgetChanged)
 
-    QDeclarativeEngine *m_engine;
-    QPointer<QObject> m_widget;
-    QPointer<QObject> m_window;
+public:
+    ~Settings();
+
+    static Settings* instance();
+    
+    static bool enableAutomaticScrollingInWidget();
+
+public Q_SLOTS:
+    static void setEnableAutomaticScrollingInWidget(bool enabled);
+    
+Q_SIGNALS:
+    void enableAutomaticScrollingInWidgetChanged();
+
+private:
+    Settings();
+
+    static Settings *self;
 };
 
-#endif // EVENTFEEDUI_H
+#endif // SETTINGS_H

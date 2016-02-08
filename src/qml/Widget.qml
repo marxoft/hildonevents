@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2015 Stuart Howarth <showarth@marxoft.co.uk>
+ * Copyright (C) 2016 Stuart Howarth <showarth@marxoft.co.uk>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License version 3 as
@@ -46,6 +46,18 @@ HomescreenWidget {
     ListView {
         id: view
         
+        function incrementCurrentIndexInstantly() {
+            highlightMoveDuration = 1;
+            incrementCurrentIndex();
+            highlightMoveDuration = -1;
+        }
+        
+        function decrementCurrentIndexInstantly() {
+            highlightMoveDuration = 1;
+            decrementCurrentIndex();
+            highlightMoveDuration = -1;
+        }
+        
         anchors {
             left: parent.left
             right: parent.right
@@ -56,6 +68,11 @@ HomescreenWidget {
         clip: true
         horizontalScrollBarPolicy: Qt.ScrollBarAlwaysOff
         verticalScrollBarPolicy: Qt.ScrollBarAlwaysOff
+        preferredHighlightBegin: 0
+        preferredHighlightEnd: 70
+        highlightMoveDuration: -1
+        highlightMoveSpeed: 25
+        highlightRangeMode: ListView.StrictlyEnforceRange
         model: EventModel {
             id: eventModel
         }
@@ -149,7 +166,8 @@ HomescreenWidget {
             height: 48
             style: buttonStyle
             iconName: "rss_reader_move_up"
-            onClicked: view.currentIndex = Math.max(0, view.currentIndex - 4)            
+            enabled: view.currentIndex > 0
+            onClicked: view.decrementCurrentIndexInstantly()
         }
         
         ToolButton {
@@ -169,21 +187,31 @@ HomescreenWidget {
             height: 48
             style: buttonStyle
             iconName: "rss_reader_move_down"
-            onClicked: view.currentIndex = Math.min(view.count - 1, view.currentIndex + 4)            
+            enabled: view.currentIndex < view.count - 4
+            onClicked: view.incrementCurrentIndexInstantly()
         }
+    }
+    
+    Timer {
+        id: scrollTimer
+        
+        interval: 6000
+        repeat: true
+        running: (settings.enableAutomaticScrollingInWidget) && (widget.isOnCurrentHomescreen)
+                 && (view.currentIndex < view.count - 4) && (!upButton.pressed) && (!downButton.pressed)
+        onTriggered: view.incrementCurrentIndex()
     }
     
     Component {
-        id: settingsDialog
+        id: settingsWindow
         
-        SettingsDialog {
-            onStatusChanged: if (status == DialogStatus.Closed) destroy();
-            
-            Component.onCompleted: open()
+        SettingsWindow {
+            visible: true
+            onStatusChanged: if (status == WindowStatus.Closed) destroy();
         }
     }
     
-    onSettingsRequested: settingsDialog.createObject(null)
+    onSettingsRequested: settingsWindow.createObject(null)
     
     Component.onCompleted: eventModel.reload()
 }

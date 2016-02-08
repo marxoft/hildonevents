@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2015 Stuart Howarth <showarth@marxoft.co.uk>
+ * Copyright (C) 2016 Stuart Howarth <showarth@marxoft.co.uk>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License version 3 as
@@ -17,6 +17,7 @@
 #include "database.h"
 #include "eventfeed.h"
 #include "eventfeedui.h"
+#include "settings.h"
 #include <QApplication>
 #include <QStringList>
 
@@ -24,13 +25,14 @@ Q_DECL_EXPORT int main(int argc, char *argv[]) {
     QApplication app(argc, argv);
     app.setOrganizationName("HildonEvents");
     app.setApplicationName("Event Feed");
-    app.setApplicationVersion("0.4.0");
+    app.setApplicationVersion("0.5.0");
     app.setQuitOnLastWindowClosed(false);
     
     initDatabase();
     
     QScopedPointer<EventFeed> feed(EventFeed::instance());
     QScopedPointer<EventFeedUi> ui(EventFeedUi::instance());
+    QScopedPointer<Settings> settings(Settings::instance());
     
     const QStringList args = app.arguments();
     
