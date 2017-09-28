@@ -8,7 +8,7 @@ Homepage: https://github.com/marxoft/hildonevents
 
 Package: hildonevents
 Architecture: any
-Depends: ${shlibs:Depends}, ${misc:Depends}, qt-components-hildon (>= 0.20.1)
+Depends: ${shlibs:Depends}, ${misc:Depends}, qt-components-hildon (>= 0.26.0)
 Description: Event feed application and widget.
  Hildon Event Feed provides an event feed for Maemo5, similar to that in Meego-Harmattan. 
  Applications can interact with the event feed using D-Bus.
