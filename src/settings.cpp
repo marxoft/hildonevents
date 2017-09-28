@@ -49,7 +49,21 @@ void Settings::setEnableAutomaticScrollingInWidget(bool enabled) {
         setValue("Widget/automaticScrollingEnabled", enabled);
         
         if (self) {
-            emit self->enableAutomaticScrollingInWidgetChanged();
+            emit self->enableAutomaticScrollingInWidgetChanged(enabled);
+        }
+    }
+}
+
+int Settings::screenOrientation() {
+    return value("Application/screenOrientation", Qt::WA_Maemo5LandscapeOrientation).toInt();
+}
+
+void Settings::setScreenOrientation(int orientation) {
+    if (orientation != screenOrientation()) {
+        setValue("Application/screenOrientation", orientation);
+
+        if (self) {
+            emit self->screenOrientationChanged(orientation);
         }
     }
 }

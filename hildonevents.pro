@@ -9,6 +9,8 @@ HEADERS = \
     src/eventfeedui.h \
     src/eventmodel.h \
     src/json.h \
+    src/screenorientationmodel.h \
+    src/selectionmodel.h \
     src/settings.h \
     src/settingsmodel.h
 
@@ -18,13 +20,17 @@ SOURCES = \
     src/eventmodel.cpp \
     src/json.cpp \
     src/main.cpp \
+    src/selectionmodel.cpp \
     src/settings.cpp \
     src/settingsmodel.cpp
 
 qml.files = \
+    src/qml/AboutDialog.qml \
+    src/qml/ListSelectorButton.qml \
     src/qml/MainWindow.qml \
     src/qml/SeparatorLabel.qml \
     src/qml/SettingsButton.qml \
+    src/qml/SettingsDialog.qml \
     src/qml/SettingsWindow.qml \
     src/qml/Widget.qml \
     src/qml/WidgetSettingsDialog.qml

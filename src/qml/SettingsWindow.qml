@@ -48,12 +48,26 @@ Window {
                 width: flow.width
                 text: qsTr("Event Feed")
             }
+
+            SettingsButton {
+                width: flow.buttonWidth
+                text: qsTr("Application")
+                iconName: "general_settings"
+                onClicked: internal.settings = settingsDialog.createObject(root)
+            }
             
             SettingsButton {
                 width: flow.buttonWidth
                 text: qsTr("Homescreen widget")
-                iconName: "hildonevents"
+                iconName: "general_settings"
                 onClicked: internal.settings = widgetDialog.createObject(root)
+            }
+
+            SettingsButton {
+                width: flow.buttonWidth
+                text: qsTr("About")
+                iconName: "general_help"
+                onClicked: internal.settings = aboutDialog.createObject(root)
             }
             
             SeparatorLabel {
@@ -110,12 +124,38 @@ Window {
         
         property QtObject settings: null
     }
+
+    Component {
+        id: settingsDialog
+
+        SettingsDialog {
+            Component.onCompleted: open()
+        }
+    }
     
     Component {
         id: widgetDialog
         
         WidgetSettingsDialog {
             Component.onCompleted: open()
+        }
+    }
+
+    Component {
+        id: aboutDialog
+
+        AboutDialog {
+            Component.onCompleted: open()
+        }
+    }
+
+    contentItem.states: State {
+        name: "Portrait"
+        when: screen.currentOrientation == Qt.WA_Maemo5PortraitOrientation
+
+        PropertyChanges {
+            target: flow
+            buttonWidth: width
         }
     }
     

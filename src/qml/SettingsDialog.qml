@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2016 Stuart Howarth <showarth@marxoft.co.uk>
+ * Copyright (C) 2017 Stuart Howarth <showarth@marxoft.co.uk>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License version 3 as
@@ -16,12 +16,13 @@
 
 import QtQuick 1.0
 import org.hildon.components 1.0
+import org.hildon.eventfeed 1.0
 
 Dialog {
     id: root
     
     height: grid.height + platformStyle.paddingMedium
-    title: qsTr("Homescreen widget")
+    title: qsTr("Application")
     
     Grid {
         id: grid
@@ -34,13 +35,14 @@ Dialog {
         spacing: platformStyle.paddingMedium
         columns: 2
         
-        CheckBox {
-            id: scrollCheckBox
+        ListSelectorButton {
+            id: orientationButton
             
             width: grid.width - acceptButton.width - grid.spacing
-            text: qsTr("Automatic scrolling")
-            checked: settings.enableAutomaticScrollingInWidget
-            onClicked: settings.enableAutomaticScrollingInWidget = checked
+            text: qsTr("Screen orientation")
+            model: ScreenOrientationModel {}
+            value: settings.screenOrientation
+            onSelected: settings.screenOrientation = value
         }
         
         Button {
@@ -62,7 +64,7 @@ Dialog {
         }
 
         PropertyChanges {
-            target: scrollCheckBox
+            target: orientationButton
             width: grid.width
         }
 

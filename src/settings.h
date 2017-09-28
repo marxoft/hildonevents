@@ -25,6 +25,8 @@ class Settings : public QObject
     
     Q_PROPERTY(bool enableAutomaticScrollingInWidget READ enableAutomaticScrollingInWidget
                WRITE setEnableAutomaticScrollingInWidget NOTIFY enableAutomaticScrollingInWidgetChanged)
+    Q_PROPERTY(int screenOrientation READ screenOrientation WRITE setScreenOrientation
+               NOTIFY screenOrientationChanged)
 
 public:
     ~Settings();
@@ -32,12 +34,15 @@ public:
     static Settings* instance();
     
     static bool enableAutomaticScrollingInWidget();
+    static int screenOrientation();
 
 public Q_SLOTS:
     static void setEnableAutomaticScrollingInWidget(bool enabled);
+    static void setScreenOrientation(int orientation);
     
 Q_SIGNALS:
-    void enableAutomaticScrollingInWidgetChanged();
+    void enableAutomaticScrollingInWidgetChanged(bool enabled);
+    void screenOrientationChanged(int orientation);
 
 private:
     Settings();

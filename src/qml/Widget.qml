@@ -166,7 +166,7 @@ HomescreenWidget {
             height: 48
             style: buttonStyle
             iconName: "rss_reader_move_up"
-            enabled: view.currentIndex > 0
+            enabled: view.currentIndex > 4
             onClicked: view.decrementCurrentIndexInstantly()
         }
         

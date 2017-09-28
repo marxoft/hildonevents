@@ -26,14 +26,61 @@ ApplicationWindow {
     showProgressIndicator: feed.refreshing
     menuBar: MenuBar {
         MenuItem {
-            text: feed.refreshing ? qsTr("Cancel refresh") : qsTr("Refresh")
-            onTriggered: feed.refreshing ? feed.cancelRefresh() : feed.refresh()
+            action: refreshAction
         }
         
         MenuItem {
-            text: qsTr("Settings")
-            onTriggered: windowStack.push(Qt.resolvedUrl("SettingsWindow.qml"))
+            action: settingsAction
         }
+
+        MenuItem {
+            action: quitAction
+        }
+    }
+
+    Action {
+        id: refreshAction
+
+        text: feed.refreshing ? qsTr("Cancel refresh") : qsTr("Refresh")
+        shortcut: qsTr("Ctrl+R")
+        autoRepeat: false
+        onTriggered: feed.refreshing ? feed.cancelRefresh() : feed.refresh()
+    }
+
+    Action {
+        id: settingsAction
+
+        text: qsTr("Settings")
+        shortcut: qsTr("Ctrl+P")
+        autoRepeat: false
+        onTriggered: windowStack.push(Qt.resolvedUrl("SettingsWindow.qml"))
+    }
+
+    Action {
+        id: quitAction
+
+        text: qsTr("Quit")
+        shortcut: qsTr("Ctrl+Q")
+        autoRepeat: false
+        onTriggered: feed.refreshing ? popupManager.open(quitDialog, window) : Qt.quit()
+    }
+
+    Action {
+        id: removeAction
+
+        shortcut: qsTr("D")
+        autoRepeat: false
+        enabled: view.currentIndex != -1
+        onTriggered: feed.removeItem(eventModel.data(view.currentIndex, "id"))
+    }
+
+    Action {
+        id: removeSourceAction
+
+        shortcut: qsTr("Shift+D")
+        autoRepeat: false
+        enabled: view.currentIndex != -1
+        onTriggered: feed.removeItemsBySourceName(eventModel.data(view.currentIndex, "sourceName"))
     }
     
     FontMetrics {
@@ -47,6 +94,7 @@ ApplicationWindow {
         
         anchors.fill: parent
         horizontalScrollBarPolicy: Qt.ScrollBarAlwaysOff
+        cacheBuffer: 800
         model: EventModel {
             id: eventModel
         }
@@ -149,7 +197,7 @@ ApplicationWindow {
             }
             
             onClicked: feed.openItem(id)
-            onPressAndHold: contextMenu.popup()
+            onPressAndHold: popupManager.open(contextMenu, window)
         }
     }
     
@@ -160,19 +208,36 @@ ApplicationWindow {
         text: qsTr("No events")
         visible: eventModel.count == 0
     }
-    
-    Menu {
+
+    Component {
         id: contextMenu
-        
-        MenuItem {
-            text: qsTr("Remove")
-            onTriggered: feed.removeItem(eventModel.data(view.currentIndex, "id"))
+
+        Menu {
+            MenuItem {
+                text: qsTr("Remove")
+                onTriggered: feed.removeItem(eventModel.data(view.currentIndex, "id"))
+            }
+            
+            MenuItem {
+                text: qsTr("Remove") + " " + eventModel.data(view.currentIndex, "sourceDisplayName")
+                onTriggered: feed.removeItemsBySourceName(eventModel.data(view.currentIndex, "sourceName"))
+            }
         }
-        
-        MenuItem {
-            text: qsTr("Remove") + " " + eventModel.data(view.currentIndex, "sourceDisplayName")
-            onTriggered: feed.removeItemsBySourceName(eventModel.data(view.currentIndex, "sourceName"))
+    }
+
+    Component {
+        id: quitDialog
+
+        MessageBox {
+            text: qsTr("The event feed is currently being refreshed. Quit anyway?")
+            onAccepted: Qt.quit()
         }
+    }
+
+    Binding {
+        target: screen
+        property: "orientationLock"
+        value: settings.screenOrientation
     }
     
     Component.onCompleted: eventModel.reload()

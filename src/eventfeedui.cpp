@@ -17,8 +17,10 @@
 #include "eventfeedui.h"
 #include "eventfeed.h"
 #include "eventmodel.h"
+#include "screenorientationmodel.h"
 #include "settings.h"
 #include "settingsmodel.h"
+#include <QApplication>
 #include <QDBusConnection>
 #include <QDeclarativeEngine>
 #include <QDeclarativeContext>
@@ -34,10 +36,9 @@ static const QString WINDOW_FILENAME("/opt/hildonevents/qml/MainWindow.qml");
 EventFeedUi* EventFeedUi::self = 0;
 
 EventFeedUi::EventFeedUi() :
-    QObject()
-{
-    self = this;
-    
+    QObject(),
+    m_engine(0)
+{   
     QDBusConnection connection = QDBusConnection::sessionBus();
     connection.registerService("org.hildon.eventfeed.ui");
     connection.registerObject("/org/hildon/eventfeed/ui", this, QDBusConnection::ExportScriptableSlots);
@@ -75,12 +76,14 @@ void EventFeedUi::initEngine() {
     }
     
     qmlRegisterType<EventModel>("org.hildon.eventfeed", 1, 0, "EventModel");
+    qmlRegisterType<ScreenOrientationModel>("org.hildon.eventfeed", 1, 0, "ScreenOrientationModel");
     qmlRegisterType<SettingsModel>("org.hildon.eventfeed", 1, 0, "SettingsModel");
     
     m_engine = new QDeclarativeEngine(this);
     m_engine->rootContext()->setContextProperty("feed", EventFeed::instance());
     m_engine->rootContext()->setContextProperty("ui", this);
     m_engine->rootContext()->setContextProperty("settings", Settings::instance());
+    connect(m_engine, SIGNAL(quit()), qApp, SLOT(quit()));
     
     QSslConfiguration config = QSslConfiguration::defaultConfiguration();
     config.setProtocol(QSsl::TlsV1);
