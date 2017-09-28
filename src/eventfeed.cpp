@@ -31,15 +31,14 @@ EventFeed* EventFeed::self = 0;
 EventFeed::EventFeed() :
     QObject(),
     m_refreshProcess(0)
-{
-    self = this;
-    
+{   
     QDBusConnection connection = QDBusConnection::sessionBus();
     connection.registerService("org.hildon.eventfeed");
     connection.registerObject("/org/hildon/eventfeed", this, QDBusConnection::ExportScriptableContents);
 }
 
 EventFeed::~EventFeed() {
+    cancelRefresh();
     self = 0;
 }
 
