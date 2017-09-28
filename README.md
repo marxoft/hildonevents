@@ -1,9 +1,9 @@
-#Hildon Event Feed
+# Hildon Event Feed
 
 Hildon Event Feed provides an event feed for Maemo5, similar to that in Meego-Harmattan. Applications 
 can interact with the event feed using D-Bus.
 
-##D-Bus interface
+## D-Bus interface
 
 Service name: org.hildon.eventfeed
 
@@ -11,9 +11,9 @@ Path: /org/hildon/eventfeed
 
 Interface name: org.hildon.eventfeed
 
-##D-Bus methods
+## D-Bus methods
 
-###addItem
+### addItem
 
 Signature: a{s,v}
 
@@ -99,45 +99,45 @@ The following parameters can be supplied:
     </tr>
 </table>
 
-###addRefreshAction
+### addRefreshAction
 
 Signature: s
 
 Adds an action to the event feed that consists of a command that is to be executed when 
 the 'refresh' button is pressed in the user interface, enabling the user to retrieve further events from the source.
 
-###removeItem
+### removeItem
 
 Signature: i
 
 Removes the item with the specified unique identifier.
 
-###removeItemsBySourceName
+### removeItemsBySourceName
 
 Signature: s
 
 Removes all items with the specified source name.
 
-###removeRefreshAction
+### removeRefreshAction
 
 Signature: s
 
 Removes the specified refresh action.
 
-###updateItem
+### updateItem
 
 Signature: ia{s,v}
 
 Updates the item with the specified unique identifer using the supplied parameters. See the **addItem** method for the 
 list of acceptable parameters.
 
-##D-Bus signals
+## D-Bus signals
 
-###refreshRequested
+### refreshRequested
 
 Emitted when the 'refresh' button is pressed in the user interface.
 
-##Settings API
+## Settings API
 
 Hildon Event Feed can display settings for individual feeds via the settings API. To provide settings for a feed, place 
 a .desktop file in **/opt/hildonevents/settings/**. The .desktop should provide the following values:
@@ -165,7 +165,7 @@ a .desktop file in **/opt/hildonevents/settings/**. The .desktop should provide 
     </tr>
 </table>
 
-###Example
+### Example
 
 An example settings desktop file for 'My Feed':
 
